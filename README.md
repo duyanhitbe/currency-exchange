@@ -2,11 +2,11 @@
 
 ## Installation
 ```bash
-git clone https://github.com/duyanhitbe/exchange-currency
+git clone https://github.com/duyanhitbe/currency-exchange
 ```
 Then:
 ```bash
-cd exchange-currency
+cd currency-exchange
 ```
 And:
 ```bash
@@ -14,9 +14,9 @@ make build
 ```
 You can you intermediately by:
 ```bash
-./bin/exchange-currency -h
+./bin/currency-exchange -h
 ```
 If you want to use it in global
 ```bash
-go install github.com/duyanhitbe/exchange-currency@latest
+go install github.com/duyanhitbe/currency-exchange@latest
 ```
