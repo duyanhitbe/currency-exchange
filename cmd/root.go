@@ -13,6 +13,7 @@ import (
 var rootCmd = &cobra.Command{
 	Use:   "currency-exchange",
 	Short: "An application help you exchange between currencies",
+	Version: "1.1.1",
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
