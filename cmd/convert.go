@@ -4,6 +4,7 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"fmt"
 	"log"
 	"strconv"
 	"strings"
@@ -62,19 +63,18 @@ func runConvert(cmd *cobra.Command, args []string) {
 	if !ok {
 		log.Fatal("Cannot parse data for the provided currency code")
 	}
-	w := helpers.NewTabWriter()
-	defer w.Writer.Flush()
 
-	// Print out the map
-	w.WriteHeaderConvert()
-
-	for i, to := range listTo {
+	var rows [][]string
+	for _, to := range listTo {
 		r := currencyData[to]
 		rate, ok := r.(float64)
 		if !ok {
 			log.Println("Cannot parse rate for currency")
 		}
-
-		w.WriteConvert(i, from, to, amount, amount*rate)
+		rows = append(rows, []string{from, to, fmt.Sprintf("%f", amount), fmt.Sprintf("%f", amount*rate)})
 	}
+
+	table := helpers.NewTable()
+	table.WriteConvert(rows)
+	table.Print()
 }

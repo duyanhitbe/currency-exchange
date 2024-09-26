@@ -4,6 +4,7 @@ Copyright © 2024 NAME HERE <EMAIL ADDRESS>
 package cmd
 
 import (
+	"fmt"
 	"log"
 	"strings"
 
@@ -60,12 +61,7 @@ func runRates(cmd *cobra.Command, args []string) {
 		}
 	}
 
-	w := helpers.NewTabWriter()
-	defer w.Writer.Flush()
-
-	// Print out the map
-	w.WriteHeaderListRates()
-	i := 0
+	var rows [][]string
 	// Iterate over the currency data and print only the filtered rates
 	for c, r := range currencyData {
 		// Check if we are filtering currencies, and if this currency is in the filter
@@ -79,8 +75,10 @@ func runRates(cmd *cobra.Command, args []string) {
 			log.Printf("Cannot parse rate for currency: %s", c)
 			continue
 		}
-		w.WriteListRates(i, c, rate)
-
-		i++
+		rows = append(rows, []string{c, fmt.Sprintf("%f", rate)})
 	}
+
+	table := helpers.NewTable()
+	table.WriteRates(rows)
+	table.Print()
 }

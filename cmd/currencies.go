@@ -39,14 +39,13 @@ func runCurrencies(cmd *cobra.Command, args []string) {
 
 	result := api.GET(url)
 
-	w := helpers.NewTabWriter()
-	defer w.Writer.Flush()
+	var rows [][]string
 
-	// Print out the map
-	w.WriteHeaderListCurrencies()
-	i := 0
 	for code, country := range result {
-		w.WriteListCurrencies(i, fmt.Sprintf("%s", country), code)
-		i++
+		rows = append(rows, []string{fmt.Sprintf("%s", country), code})
 	}
+
+	table := helpers.NewTable()
+	table.WriteCurrencies(rows)
+	table.Print()
 }
